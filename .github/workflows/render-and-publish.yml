@@ -1,5 +1,3 @@
-name: Render and Publish Quarto
-
 on:
   push:
   branches:
@@ -7,7 +5,9 @@ on:
   schedule:
     - cron: '*/15 * * * *'
   workflow_dispatch: 
-  
+
+name: Render and Publish Quarto
+
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
