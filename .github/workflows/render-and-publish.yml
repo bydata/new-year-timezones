@@ -2,7 +2,7 @@ name: Render and Publish Quarto
 
 on:
   schedule:
-    - cron: '55 * * * *'
+    - cron: '*/15 * * * *'
   workflow_dispatch: 
 
 jobs:
@@ -32,11 +32,11 @@ jobs:
     # Step 5: Render the Quarto project
     - name: Render Quarto
       run: |
-        quarto render 
+        quarto render docs/new-year.qmd --output docs/index.html
 
     # Step 6: Deploy to GitHub Pages
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: _site 
+        publish_dir: docs 
