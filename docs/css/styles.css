@@ -1,8 +1,23 @@
 body {
+  margin: 0;
+  text-align: center;
   background-color: #1a1a1a; 
   color: white; 
+  
 }
 
 a {
   color: yellow;
+}
+
+p {
+  font-size:10pt;
+}
+
+ul, ol {
+  text-align: left;
+}
+li {
+  font-size:10pt;
+  text-align: leftt;
 }
