@@ -34,15 +34,11 @@ jobs:
       run: |
         Rscript -e 'install.packages(c("tidyverse", "sf", "here", "ggtext", "ggiraph", "scales"), dependencies = TRUE)'
 
-    # Step 5: Render the Quarto project
-    - name: Render Quarto
-      run: |
-        quarto render docs/new-year.qmd --output docs/index.html
-
-    # Step 6: Deploy to GitHub Pages
+    # Step 5: Render and deploy to GitHub Pages
     - name: Deploy to GitHub Pages
       uses: quarto-dev/quarto-actions/publish@v2
       with:
         target: gh-pages
+        path: ./docs/new-year.qmd
       env:
         github_token: ${{ secrets.GITHUB_TOKEN }}
