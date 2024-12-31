@@ -19,6 +19,7 @@ library(sf)
 library(here)
 library(ggtext)
 library(ggiraph)
+library(scales)
 ```
 
 ```{r load-data, cache=TRUE}
