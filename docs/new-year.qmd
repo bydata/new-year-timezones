@@ -5,6 +5,7 @@ params:
 format: 
   html:
     css: css/styles.css
+    output-file: "index.html"
 editor: visual
 execute:
   echo: false
