@@ -14,37 +14,48 @@ execute:
 ---
 
 ```{r setup}
-library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(scales)
+library(lubridate)
 library(sf)
+library(readr)
 library(here)
 library(ggtext)
 library(ggiraph)
-library(scales)
 ```
 
 ```{r load-data, cache=TRUE}
 timezones_with_pop <- read_rds(here("data", "timezones-with-population.rds"))
+timezones_with_pop_no_geometries <- read_rds(here("data", "timezones-with-population-no-geometries.rds"))
 ```
 
 ```{r functions}
 # Calculate whether it's the new year already in a given timezone
 is_it_new_year <- function(tz, new_year = params$new_year) {
-  stopifnot(tz %in% unique(st_drop_geometry(timezones_with_pop$tzid)))
+  stopifnot(tz %in% unique(timezones_with_pop_no_geometries$tzid))
   year(with_tz(Sys.time(), tz)) == new_year
 }
 ```
 
 ```{r df-new-year}
-timezones_with_pop_new_year <- timezones_with_pop |> 
+# timezones_with_pop_new_year <- timezones_with_pop |> 
+#   rowwise() |> 
+#   mutate(is_new_year = is_it_new_year(tzid)) |> 
+#   ungroup()
+
+timezones_with_pop_new_year <- timezones_with_pop_no_geometries |> 
   rowwise() |> 
   mutate(is_new_year = is_it_new_year(tzid)) |> 
-  ungroup()
+  ungroup() |> 
+  inner_join(
+    select(timezones_with_pop, tzid, geometry), by = join_by(tzid))
+
 ```
 
 ```{r}
 # Population already in the New Year
 pop_in_new_year <- timezones_with_pop_new_year |> 
-  st_drop_geometry() |> 
   mutate(pop_share = pop / sum(pop)) |> 
   filter(is_new_year) |> 
   summarize(
@@ -86,7 +97,9 @@ theme_set(
 p_interactive <- timezones_with_pop_new_year |>
   ggplot(aes(fill = is_new_year)) +
   geom_sf_interactive(
-    aes(tooltip = paste("<b>Timezone:</b>", tzid, "<br>",
+    aes(
+      geometry = geometry,
+      tooltip = paste("<b>Timezone:</b>", tzid, "<br>",
                         "<b>Population:</b>", 
                         scales::number(pop, accuracy = 1, 
                                        big.mark = ",")
@@ -94,6 +107,7 @@ p_interactive <- timezones_with_pop_new_year |>
     color = "grey10", linewidth = 0.1
   ) +
   scale_fill_manual(values = color_pal, labels = c("no", "yes")) +
+  coord_sf() +
   labs(fill = "Is it the New Year?") 
 
 css_interactive_map <- "background-color: white; color: black; font-family: Arial, sans-serif; font-size: 12px; padding: 5px; border-radius: 4px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); text-align: left"
