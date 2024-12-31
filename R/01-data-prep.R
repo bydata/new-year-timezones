@@ -67,5 +67,8 @@ crs <- "+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +n
 timezones_with_pop <- timezones |> 
   inner_join(timezones_with_pop_units, by = join_by(tzid, tz_difference)) |> 
   st_transform(crs = crs)
+
+timezones_with_pop_simplified <- timezones_with_pop |> 
+  st_simplify(dTolerance = 10000) 
   
-write_rds(timezones_with_pop, here(data_path, "timezones-with-population.rds"))
+write_rds(timezones_with_pop_simplified, here(data_path, "timezones-with-population.rds"))
