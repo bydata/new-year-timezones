@@ -95,12 +95,12 @@ p_interactive <- timezones_with_pop_new_year |>
   scale_fill_manual(values = color_pal, labels = c("no", "yes")) +
   labs(fill = "Is it the New Year?") 
 
-# Render the interactive map
+css_interactive_map <- "background-color: white; color: black; font-family: Arial, sans-serif; font-size: 12px; padding: 5px; border-radius: 4px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); text-align: left"
 girafe(
   ggobj = p_interactive,
   options = list(
     opts_tooltip(
-      css = "background-color: white; color: black; font-family: Arial, sans-serif; font-size: 12px; padding: 5px; border-radius: 4px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);"
+      css = css_interactive_map
     ),
     opts_sizing(rescale = TRUE),
     opts_toolbar(
