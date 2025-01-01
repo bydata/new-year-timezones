@@ -105,8 +105,9 @@ p_interactive <- timezones_with_pop_new_year |>
     color = "grey10", linewidth = 0.1
   ) +
   scale_fill_manual(values = color_pal, labels = c("no", "yes")) +
-  coord_sf() +
-  labs(fill = "Is it the New Year?") 
+  coord_sf(crs = st_crs(timezones_with_pop)) +
+  labs(fill = "Is it the New Year?") +
+  theme(panel.grid = element_line(color = "grey80", linewidth = 0.25, linetype = "dotted"))
 
 css_interactive_map <- "background-color: white; color: black; font-family: Arial, sans-serif; font-size: 12px; padding: 5px; border-radius: 4px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); text-align: left"
 girafe(
@@ -121,7 +122,7 @@ girafe(
     )
   ),
   bg = "grey10")
-  
+
 ```
 
 Hover over a timezone to see the name of the timezone and the estimated population living within this timezone.
