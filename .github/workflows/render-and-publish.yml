@@ -86,6 +86,13 @@ jobs:
           cd docs
           quarto render new-year.qmd
 
+      - name: Commit and push if changed
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add docs/index.html docs/index_files/ || true
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update rendered Quarto document" && git push)
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
