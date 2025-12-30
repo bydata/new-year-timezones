@@ -2,8 +2,8 @@ name: Render and Publish Quarto
 
 on:
   schedule:
-    # Run every 20 minutes
-    - cron: '*/20 * * * *'
+    # Run every 60 minutes
+    - cron: '*/60 * * * *'
   # Allow manual trigger
   workflow_dispatch:
   # Also run on push to main branch
@@ -11,18 +11,12 @@ on:
     branches:
       - main
 
-permissions:
-  contents: write
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 jobs:
   render-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -86,7 +80,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'docs/'
+          path: 'docs'
 
       - name: Deploy to GitHub Pages
         id: deployment
