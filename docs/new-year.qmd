@@ -114,7 +114,29 @@ girafe(
 
 ```
 
-Hover over a timezone to see the name of the timezone and the estimated population living within this timezone.
+Hover over a time zone to see the name of the timezone and the estimated population living within this time zone.
+
+### Most recent time zone to welcome the New Year
+
+```{r most-recent-timezone}
+new_joiners <- timezones_with_pop_new_year |> 
+  filter(is_new_year) |> 
+  slice_min(tz_difference, n = 1, with_ties = TRUE)
+
+tz_ids_combined <- paste(new_joiners$tzid, collapse = " and ")
+new_joiners_pop <- sum(new_joiners$pop)
+
+is_are <- ifelse(nrow(new_joiners) > 1, "time zones are", "time zone is")
+
+new_joiners_text <- sprintf("The most recent %s <b>%s</b> with %s.", is_are, tz_ids_combined, scales::number(
+      new_joiners_pop, 
+      accuracy = 1, scale_cut = scales::cut_short_scale(),
+      prefix = "approx. ", suffix = " people"))
+
+```
+
+`r new_joiners_text`
+
 
 ## And which share of the world population is [already in the New Year]{style="color:#52FFEE"}?
 
