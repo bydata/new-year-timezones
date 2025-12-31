@@ -116,7 +116,7 @@ girafe(
 
 Hover over a timezone to see the name of the timezone and the estimated population living within this timezone.
 
-## And which share of the population is [already in the New Year]{style="color:#52FFEE"}?
+## And which share of the world population is [already in the New Year]{style="color:#52FFEE"}?
 
 ```{r donut, dev = "png", dev.args=list(bg="transparent")}
 
