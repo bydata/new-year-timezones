@@ -179,10 +179,13 @@ ts <- format(Sys.time(), "%Y%m%d-%H%M%S")
 filename <- sprintf("donut-chart-population-%s.png", ts)
 if (!dir.exists("plots")) dir.create("plots")
 ggsave(file.path("plots", filename))
-
 ```
 
-![Donut Chart](plots/`r filename`)
+<img src="plots/`r filename`" width=500 height=500>
+
+#### Note
+
+The New Year is assumed to be according to the Gregorian calendar.
 
 #### Sources
 
