@@ -139,7 +139,7 @@ donut_label <-
       prefix = "approx. ", suffix = " people")
   )
 
-pop_shares_new_year |> 
+p <- pop_shares_new_year |> 
   ggplot(aes(x = 0, y = total_pop_share, fill = is_new_year)) +
   geom_col() +
   annotate(
@@ -153,7 +153,14 @@ pop_shares_new_year |>
   guides(fill = "none") +
   coord_radial(theta = "y", expand = FALSE, inner.radius = 0.2) 
 
+ts <- format(Sys.time(), "%Y%m%d-%H%M%S")
+filename <- sprintf("donut-chart-population-%s.png", ts)
+if (!dir.exists("plots")) dir.create("plots")
+ggsave(file.path("plots", filename))
+
 ```
+
+![Donut Chart](plots/`r filename`)
 
 #### Sources
 
