@@ -138,7 +138,7 @@ new_joiners_text <- sprintf("The most recent %s <b>%s</b> with %s.", is_are, tz_
 `r new_joiners_text`
 
 
-## And which share of the world population is [already in the New Year]{style="color:#52FFEE"}?
+## And which share of the world population is [in the New Year]{style="color:#52FFEE"}?
 
 ```{r donut, dev = "png", dev.args=list(bg="transparent")}
 
@@ -182,6 +182,8 @@ ggsave(file.path("plots", filename))
 ```
 
 <img src="plots/`r filename`" width=700>
+
+<hr>
 
 #### Note
 
