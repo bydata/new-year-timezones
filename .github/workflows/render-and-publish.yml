@@ -90,7 +90,7 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add docs/index.html docs/new-year_files/ || true
+          git add docs/index.html docs/new-year_files/ docs/plots/ || true
           git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update rendered Quarto document" && git push)
 
       - name: Upload artifact
