@@ -39,11 +39,6 @@ is_it_new_year <- function(tz, new_year = params$new_year) {
 ```
 
 ```{r df-new-year}
-# timezones_with_pop_new_year <- timezones_with_pop |> 
-#   rowwise() |> 
-#   mutate(is_new_year = is_it_new_year(tzid)) |> 
-#   ungroup()
-
 timezones_with_pop_new_year <- timezones_with_pop_no_geometries |> 
   rowwise() |> 
   mutate(is_new_year = is_it_new_year(tzid)) |> 
@@ -71,7 +66,7 @@ color_pal <- c("#ADA8B6", "#52FFEE")
 names(color_pal) <- c("FALSE", "TRUE")
 
 theme_set(
-  theme_void(base_family = "Roboto") + 
+  theme_void(base_family = "Roboto", base_size = 16) + 
   theme(
     plot.background = element_rect(color = "grey10", fill = "grey10"),
     panel.background = element_rect(color = "transparent", fill = "transparent"),
@@ -82,26 +77,20 @@ theme_set(
 )
 ```
 
-### Which timezones are [already in the New Year]{style="color:#52FFEE"}?
+## Which timezones are [already in the New Year]{style="color:#52FFEE"}?
 
 ```{r map, dev = "png", dev.args=list(bg="transparent"), fig.width=12, fig.height=6.5}
-
-# timezones_with_pop_new_year |> 
-#   ggplot(aes(fill = is_new_year)) +
-#   geom_sf(color = "grey10", linewidth = 0.1) +
-#   scale_fill_manual(values = color_pal, labels = c("no", "yes")) +
-#   labs(fill = "Is it the New Year?")
 
 p_interactive <- timezones_with_pop_new_year |>
   ggplot(aes(fill = is_new_year)) +
   geom_sf_interactive(
     aes(
       geometry = geometry,
-      tooltip = paste("<b>Timezone:</b>", tzid, "<br>",
-                        "<b>Population:</b>", 
-                        scales::number(pop, accuracy = 1, 
-                                       big.mark = ",")
-                        )),
+      tooltip = paste(
+        "<b>Timezone:</b>", tzid, "<br>",
+        "<b>Population:</b>",
+        scales::number(pop, accuracy = 1000, big.mark = ",")
+      )),
     color = "grey10", linewidth = 0.1
   ) +
   scale_fill_manual(values = color_pal, labels = c("no", "yes")) +
@@ -127,7 +116,7 @@ girafe(
 
 Hover over a timezone to see the name of the timezone and the estimated population living within this timezone.
 
-### And which share of the population is [already in the New Year]{style="color:#52FFEE"}?
+## And which share of the population is [already in the New Year]{style="color:#52FFEE"}?
 
 ```{r donut, dev = "png", dev.args=list(bg="transparent")}
 
@@ -146,7 +135,7 @@ donut_label <-
       accuracy = 0.1),
     scales::number(
       pop_shares_new_year$total_pop[pop_shares_new_year$is_new_year], 
-      accuracy = 0.1, scale_cut = scales::cut_short_scale(),
+      accuracy = 1000, scale_cut = scales::cut_short_scale(),
       prefix = "approx. ", suffix = " people")
   )
 
@@ -166,7 +155,7 @@ pop_shares_new_year |>
 
 ```
 
-##### Sources
+#### Sources
 
 -   Timezones: <https://github.com/evansiroky/timezone-boundary-builder> (MIT Licence)
 -   Population density: GHSL (GHS-POP, 2020), Schiavina et al. (2023)
