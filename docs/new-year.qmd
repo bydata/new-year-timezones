@@ -135,7 +135,7 @@ donut_label <-
       accuracy = 0.1),
     scales::number(
       pop_shares_new_year$total_pop[pop_shares_new_year$is_new_year], 
-      accuracy = 1000, scale_cut = scales::cut_short_scale(),
+      accuracy = 1, scale_cut = scales::cut_short_scale(),
       prefix = "approx. ", suffix = " people")
   )
 
