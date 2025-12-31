@@ -181,7 +181,7 @@ if (!dir.exists("plots")) dir.create("plots")
 ggsave(file.path("plots", filename))
 ```
 
-<img src="plots/`r filename`" width=500 height=500>
+<img src="plots/`r filename`" width=700>
 
 #### Note
 
