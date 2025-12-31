@@ -3,7 +3,7 @@ name: Render and Publish Quarto
 on:
   schedule:
     # Run every 15 minutes
-    - cron: '/15 * * * *'
+    - cron: '*/15 * * * *'
   # Allow manual trigger
   workflow_dispatch:
   # Also run on push to main branch
