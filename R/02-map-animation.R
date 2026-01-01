@@ -15,16 +15,16 @@ p <- timezones_with_pop |>
   geom_sf(
     data = select(timezones_with_pop, -tz_difference),
     aes(fill = FALSE),
-    color = "grey10", linewidth = 0.1
+    color = "grey10", linewidth = 0.05
   ) +
   geom_sf(
     aes(fill = TRUE),
-    color = "grey10", linewidth = 0.1
+    color = "grey10", linewidth = 0.05
   ) +
   scale_fill_manual(values = color_pal, labels = c("no", "yes")) +
   labs(
     title = "Is it New Year already?",
-    subtitle = "Which timezones are <span style='color:#52FFEE'>already in the new year</span>?",
+    subtitle = "Which time zones are <span style='color:#52FFEE'>already in the new year</span>?",
     fill = "Is it the New Year?") +
   theme_void(base_family = "Roboto", base_size = 9) + 
   theme(
@@ -33,11 +33,12 @@ p <- timezones_with_pop |>
     legend.position = "top",
     legend.background = element_rect(color = "transparent", fill = "transparent"),
     text = element_text(color = "white"),
-    plot.title = element_markdown(hjust = 0.5, size = 18),
+    plot.title = element_markdown(
+      family = "Roboto Light", hjust = 0.5, size = 18),
     plot.subtitle = element_markdown(
       hjust = 0.5, size = 12, margin = margin(t = 6, b = 12)),
     panel.grid = element_line(
-      color = "grey80", linewidth = 0.25, linetype = "dotted"),
+      color = "grey80", linewidth = 0.1, linetype = "dotted"),
     legend.key.size = unit(2, "mm")
   ) +
   transition_states(-tz_difference) +
